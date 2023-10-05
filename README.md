@@ -11,6 +11,7 @@ On [sergdolgov.github.io](https://sergdolgov.github.io), I have compiled my Proo
 
 ## Project Diagram
 
+project diagram
 
 ## Applications
 
