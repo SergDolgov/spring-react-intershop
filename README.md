@@ -167,7 +167,7 @@ In the **Medium** article,
                     Endpoints | without token |  user token |  admin token |
     ------------------------- + ------------- + ----------- + ------------ |
      GET public/numberOfUsers |           200 |         200 |          200 |
-  GET public/numberOfProducts |           200 |         200 |          200 |
+   GET public/numberOfProducts |           200 |         200 |          200 |
     ......................... + ............. + ........... + ............ |
             GET /api/users/me |           401 |         200 |          200 |
                GET /api/users |           401 |         403 |          200 |
