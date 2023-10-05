@@ -4,20 +4,19 @@ The goal of this project is to implement an application called `intershop-app` t
 
 ## Proof-of-Concepts & Articles
 
-On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-Concepts (PoCs) and articles. You can easily search for the technology you are interested in by using the filter. Who knows, perhaps I have already implemented a PoC or written an article about what you are looking for.
+On [sergdolgov.github.io](https://sergdolgov.github.io), I have compiled my Proof-of-Concepts (PoCs) and articles. You can easily search for the technology you are interested in by using the filter. Who knows, perhaps I have already implemented a PoC or written an article about what you are looking for.
 
 ## Additional Readings
 
 - \[**Medium**\] [**Implementing A Full Stack Web App Using Spring-Boot and React**](https://medium.com/javarevisited/implementing-a-full-stack-web-app-using-spring-boot-and-react-7db598df4452)
-- \[**Medium**\] [**Implementing Social Login in a Spring Boot and React App**](https://medium.com/@ivangfr/implementing-social-login-in-a-spring-boot-and-react-app-6ce073c9983c)
-- \[**Medium**\] [**How to Create an OAuth2 App in GitHub**](https://medium.com/@ivangfr/how-to-create-an-oauth2-app-in-github-8e273e376408)
-- \[**Medium**\] [**How to Create an OAuth2 App in Google**](https://medium.com/@ivangfr/how-to-create-an-oauth2-app-in-google-10e846d23adb)
-- \[**Medium**\] [**Building a Web Chat with Social Login using Spring Boot: Introduction**](https://medium.com/@ivangfr/building-a-web-chat-with-social-login-using-spring-boot-introduction-644702e6be8e)
-- \[**Medium**\] [**Building a Single Spring Boot App with Keycloak or Okta as IdP: Introduction**](https://medium.com/@ivangfr/building-a-single-spring-boot-app-with-keycloak-or-okta-as-idp-introduction-2814a4829aed)
+- \[**Medium**\] [**Implementing Social Login in a Spring Boot and React App**](https://medium.com/@sergdolgov/implementing-social-login-in-a-spring-boot-and-react-app-6ce073c9983c)
+- \[**Medium**\] [**How to Create an OAuth2 App in GitHub**](https://medium.com/@sergdolgov/how-to-create-an-oauth2-app-in-github-8e273e376408)
+- \[**Medium**\] [**How to Create an OAuth2 App in Google**](https://medium.com/@sergdolgov/how-to-create-an-oauth2-app-in-google-10e846d23adb)
+- \[**Medium**\] [**Building a Web Chat with Social Login using Spring Boot: Introduction**](https://medium.com/@sergdolgov/building-a-web-chat-with-social-login-using-spring-boot-introduction-644702e6be8e)
+- \[**Medium**\] [**Building a Single Spring Boot App with Keycloak or Okta as IdP: Introduction**](https://medium.com/@sergdolgov/building-a-single-spring-boot-app-with-keycloak-or-okta-as-idp-introduction-2814a4829aed)
 
 ## Project Diagram
 
-![project-diagram](documentation/project-diagram.jpeg)
 
 ## Applications
 
@@ -57,15 +56,15 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - **Github**
 
-  In the **Medium** article, [**How to Create an OAuth2 App in GitHub**](https://medium.com/@ivangfr/how-to-create-an-oauth2-app-in-github-8e273e376408), we will walk you through the process of creating an OAuth2 app in `GitHub`.
+  In the **Medium** article, [**How to Create an OAuth2 App in GitHub**](https://medium.com/@sergdolgov/how-to-create-an-oauth2-app-in-github-8e273e376408), we will walk you through the process of creating an OAuth2 app in `GitHub`.
 
 - **Google**
 
-  In the **Medium** article, [**How to Create an OAuth2 App in Google**](https://medium.com/@ivangfr/how-to-create-an-oauth2-app-in-google-10e846d23adb), we will show in details how to create an OAuth2 app in `Google`.
+  In the **Medium** article, [**How to Create an OAuth2 App in Google**](https://medium.com/@sergdolgov/how-to-create-an-oauth2-app-in-google-10e846d23adb), we will show in details how to create an OAuth2 app in `Google`.
 
 ## How Social Login Works?
 
-In the **Medium** article, [**Implementing Social Login in a Spring Boot and React App**](https://medium.com/@ivangfr/implementing-social-login-in-a-spring-boot-and-react-app-6ce073c9983c), we show the complete Social Login flow, covering the request and redirections among `intershop-ui`, `intershop-api` and `GitHub` provider.
+In the **Medium** article, [**Implementing Social Login in a Spring Boot and React App**](https://medium.com/@sergdolgov/implementing-social-login-in-a-spring-boot-and-react-app-6ce073c9983c), we show the complete Social Login flow, covering the request and redirections among `intershop-ui`, `intershop-api` and `GitHub` provider.
 
 ## Prerequisites
 
@@ -127,11 +126,11 @@ In the **Medium** article, [**Implementing Social Login in a Spring Boot and Rea
 
 - The gif below shows a `user` loging in using the `Github`
 
-  ![github-login](documentation/github-login.gif)
+
 
 - The gif below shows an `admin` loging in using his application account
 
-  ![admin-login](documentation/admin-login.gif)
+
 
 ## Testing intershop-api Endpoints
 
