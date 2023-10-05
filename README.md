@@ -1,4 +1,4 @@
-# spring-react-intershop
+# Spring-react-intershop
 
 The goal of this project is to implement an application called `intershop-app` to manage products. For it, we will implement a back-end [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application called `intershop-api` and a font-end [React](https://react.dev/) application called `intershop-ui`. Besides, we will use [`OAuth2`](https://en.wikipedia.org/wiki/OAuth#OAuth_2.0) (Social Login) to secure both applications.
 
@@ -29,14 +29,14 @@ On [sergdolgov.github.io](https://sergdolgov.github.io), I have compiled my Proo
   | `POST /auth/authenticate -d {"username","password"}`          | No      |                 |
   | `POST /auth/signup -d {"username","password","name","email"}` | No      |                 |
   | `GET /public/numberOfUsers`                                   | No      |                 |
-  | `GET /public/numberOfProducts`                                  | No      |                 |
+  | `GET /public/numberOfProducts`                                | No      |                 |
   | `GET /api/users/me`                                           | Yes     | `ADMIN`, `USER` |
   | `GET /api/users`                                              | Yes     | `ADMIN`         |
   | `GET /api/users/{username}`                                   | Yes     | `ADMIN`         |
   | `DELETE /api/users/{username}`                                | Yes     | `ADMIN`         |
-  | `GET /api/products [?text]`                                     | Yes     | `ADMIN`, `USER` |
-  | `POST /api/products -d {"imdb","description"}`                  | Yes     | `ADMIN`         |
-  | `DELETE /api/products/{imdb}`                                   | Yes     | `ADMIN`         |
+  | `GET /api/products [?text]`                                   | Yes     | `ADMIN`, `USER` |
+  | `POST /api/products -d {"imdb","description"}`                | Yes     | `ADMIN`         |
+  | `DELETE /api/products/{imdb}`                                 | Yes     | `ADMIN`         |
 
 - ### intershop-ui
 
