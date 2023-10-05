@@ -8,11 +8,11 @@ On [sergdolgov.github.io](https://sergdolgov.github.io), I have compiled my Proo
 
 ## Additional Readings
 
-new commit here 789
+new commit here 123789
 
 ## Project Diagram
 
-project diagram 123
+project diagram 123789
 
 ## Applications
 
