@@ -7,6 +7,7 @@ The goal of this project is to implement an application called `intershop-app` t
 On [sergdolgov.github.io](https://sergdolgov.github.io), I have compiled my Proof-of-Concepts (PoCs) and articles. You can easily search for the technology you are interested in by using the filter. Who knows, perhaps I have already implemented a PoC or written an article about what you are looking for.
 
 ## Additional Readings
+
 new commit here
 
 ## Project Diagram
