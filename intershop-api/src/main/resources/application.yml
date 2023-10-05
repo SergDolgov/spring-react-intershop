@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: intershop-api
+  jpa:
+    hibernate:
+      ddl-auto: none
+    generate-ddl: true
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/intershop
+    username: postgres
+    password: 78945
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: 1 # ${GITHUB_CLIENT_ID}
+            clientSecret: 1 # ${GITHUB_CLIENT_SECRET}
+            scope: read:user, user:email
+          google:
+            clientId: 528234244330-fmgn7klkc9eld7r9uhbcct2lu718pu8m.apps.googleusercontent.com # ${GOOGLE_CLIENT_ID}
+            clientSecret: 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 # ${GOOGLE_CLIENT_SECRET}
+            scope: profile, email
+
+app:
+  jwt:
+    # Signing key for HS512 algorithm
+    # In https://it-tools.tech/token-generator you can generate all kinds of keys
+    secret: v9y$B&E)H@MbQeThWmZq4t7w!z%C*F-JaNdRfUjXn2r5u8x/A?D(G+KbPeShVkYp
+    expiration:
+      minutes: 10
+  oauth2:
+    #redirectUri: http://localhost:3000/oauth2/redirect
+    redirectUri: http://localhost:9000/oauth2/redirect
+  cors:
+    #allowed-origins: http://localhost:3000
+    allowed-origins: http://localhost:9000
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+
+server:
+  port: 8888
