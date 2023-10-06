@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/intershop
     username: postgres
-    password: 78945
+    password: postgres
   security:
     oauth2:
       client:
@@ -34,8 +34,8 @@ app:
     #redirectUri: http://localhost:3000/oauth2/redirect
     redirectUri: http://localhost:9000/oauth2/redirect
   cors:
-    #allowed-origins: http://localhost:3000
-    allowed-origins: http://localhost:9000
+    allowed-origins: http://localhost:3000
+    #allowed-origins: http://localhost:9000
 
 logging:
   level:

@@ -27,7 +27,7 @@ project diagram 123789
   `intershop-api` has the following endpoints
 
   | Endpoint                                                      | Secured | Roles           |
-  | ------------------------------------------------------------- | ------- | --------------- |
+  |---------------------------------------------------------------| ------- | --------------- |
   | `POST /auth/authenticate -d {"username","password"}`          | No      |                 |
   | `POST /auth/signup -d {"username","password","name","email"}` | No      |                 |
   | `GET /public/numberOfUsers`                                   | No      |                 |
@@ -37,8 +37,8 @@ project diagram 123789
   | `GET /api/users/{username}`                                   | Yes     | `ADMIN`         |
   | `DELETE /api/users/{username}`                                | Yes     | `ADMIN`         |
   | `GET /api/products [?text]`                                   | Yes     | `ADMIN`, `USER` |
-  | `POST /api/products -d {"imdb","description"}`                | Yes     | `ADMIN`         |
-  | `DELETE /api/products/{imdb}`                                 | Yes     | `ADMIN`         |
+  | `POST /api/products -d {"id","description"}`                  | Yes     | `ADMIN`         |
+  | `DELETE /api/products/{id}`                                   | Yes     | `ADMIN`         |
 
 - ### intershop-ui
 
