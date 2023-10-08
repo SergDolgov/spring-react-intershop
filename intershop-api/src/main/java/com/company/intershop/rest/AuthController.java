@@ -1,7 +1,7 @@
 package com.company.intershop.rest;
 
 import com.company.intershop.exception.DuplicatedUserInfoException;
-import com.company.intershop.model.User;
+import com.company.intershop.domain.User;
 import com.company.intershop.rest.dto.AuthResponse;
 import com.company.intershop.rest.dto.LoginRequest;
 import com.company.intershop.rest.dto.SignUpRequest;

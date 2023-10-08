@@ -1,8 +1,7 @@
 package com.company.intershop.service;
 
 import com.company.intershop.exception.UserNotFoundException;
-import com.company.intershop.model.Product;
-import com.company.intershop.model.User;
+import com.company.intershop.domain.User;
 import com.company.intershop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.company.intershop.rest;
 
 import com.company.intershop.mapper.UserMapper;
-import com.company.intershop.model.User;
+import com.company.intershop.domain.User;
 import com.company.intershop.rest.dto.UserDto;
 import com.company.intershop.security.CustomUserDetails;
 import com.company.intershop.service.UserService;

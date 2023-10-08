@@ -1,17 +1,15 @@
 package com.company.intershop.mapper;
 
-import com.company.intershop.model.Product;
+import com.company.intershop.domain.Product;
 import com.company.intershop.rest.dto.CreateProductRequest;
 import com.company.intershop.rest.dto.ProductDto;
 import com.company.intershop.service.BrandService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 
 @Service
-//@Component
 @RequiredArgsConstructor
 public class ProductMapperImpl implements ProductMapper {
 

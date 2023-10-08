@@ -1,6 +1,6 @@
 package com.company.intershop.mapper;
 
-import com.company.intershop.model.User;
+import com.company.intershop.domain.User;
 import com.company.intershop.rest.dto.UserDto;
 import org.springframework.stereotype.Service;
 

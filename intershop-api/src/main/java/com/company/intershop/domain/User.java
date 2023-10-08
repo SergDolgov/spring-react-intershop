@@ -1,4 +1,4 @@
-package com.company.intershop.model;
+package com.company.intershop.domain;
 
 import com.company.intershop.security.oauth2.OAuth2Provider;
 import jakarta.persistence.Entity;

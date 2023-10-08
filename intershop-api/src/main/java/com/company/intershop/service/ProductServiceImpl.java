@@ -1,7 +1,7 @@
 package com.company.intershop.service;
 
 import com.company.intershop.exception.ProductNotFoundException;
-import com.company.intershop.model.Product;
+import com.company.intershop.domain.Product;
 import com.company.intershop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProducts() {
-        return productRepository.findAllByOrderByTitle();
+        return productRepository.findAll();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product validateAndGetProduct(Long id) {
-        return productRepository.findById(String.valueOf(id))
+        return productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException(String.format("Product with id %s not found", id)));
     }
 
@@ -43,5 +43,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(Product product) {
         productRepository.delete(product);
+    }
+
+    public Product getProductById(long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(String.format("Product with id %s not found", id)));
     }
 }

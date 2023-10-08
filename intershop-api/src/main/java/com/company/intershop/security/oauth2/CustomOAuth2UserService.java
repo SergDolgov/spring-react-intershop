@@ -1,6 +1,6 @@
 package com.company.intershop.security.oauth2;
 
-import com.company.intershop.model.User;
+import com.company.intershop.domain.User;
 import com.company.intershop.security.CustomUserDetails;
 import com.company.intershop.security.WebSecurityConfig;
 import com.company.intershop.service.UserService;

@@ -1,9 +1,8 @@
 package com.company.intershop.service;
 
-import com.company.intershop.model.Brand;
+import com.company.intershop.domain.Brand;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BrandService {
 

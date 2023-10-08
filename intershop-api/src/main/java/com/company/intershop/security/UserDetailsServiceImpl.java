@@ -1,6 +1,6 @@
 package com.company.intershop.security;
 
-import com.company.intershop.model.User;
+import com.company.intershop.domain.User;
 import com.company.intershop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

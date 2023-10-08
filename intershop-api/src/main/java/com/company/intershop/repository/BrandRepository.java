@@ -1,6 +1,6 @@
 package com.company.intershop.repository;
 
-import com.company.intershop.model.Brand;
+import com.company.intershop.domain.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

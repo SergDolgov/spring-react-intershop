@@ -1,6 +1,6 @@
 package com.company.intershop.service;
 
-import com.company.intershop.model.Brand;
+import com.company.intershop.domain.Brand;
 import com.company.intershop.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

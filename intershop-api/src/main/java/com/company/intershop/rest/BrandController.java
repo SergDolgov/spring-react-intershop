@@ -1,7 +1,7 @@
 package com.company.intershop.rest;
 
 import com.company.intershop.mapper.BrandMapper;
-import com.company.intershop.model.Brand;
+import com.company.intershop.domain.Brand;
 import com.company.intershop.rest.dto.BrandDto;
 import com.company.intershop.service.BrandService;
 import io.swagger.v3.oas.annotations.Operation;

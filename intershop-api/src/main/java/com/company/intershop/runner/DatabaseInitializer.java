@@ -1,13 +1,11 @@
 package com.company.intershop.runner;
 
-import com.company.intershop.model.Brand;
-import com.company.intershop.model.Product;
-import com.company.intershop.model.User;
-import com.company.intershop.repository.BrandRepository;
+import com.company.intershop.domain.Brand;
+import com.company.intershop.domain.Product;
+import com.company.intershop.domain.User;
 import com.company.intershop.security.oauth2.OAuth2Provider;
 import com.company.intershop.security.WebSecurityConfig;
 import com.company.intershop.service.BrandService;
-import com.company.intershop.service.BrandServiceImpl;
 import com.company.intershop.service.ProductService;
 import com.company.intershop.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +31,10 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        if (!brandService.getBrands().isEmpty()) {
+            return;
+        }
+
         if (!userService.getUsers().isEmpty()) {
             return;
         }

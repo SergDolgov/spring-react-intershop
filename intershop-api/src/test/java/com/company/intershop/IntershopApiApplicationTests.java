@@ -10,4 +10,8 @@ class IntershopApiApplicationTests {
 	void contextLoads() {
 	}
 
+//	@Test
+//	public void main() {
+//		IntershopApiApplication.main(new String[] {});
+//	}
 }

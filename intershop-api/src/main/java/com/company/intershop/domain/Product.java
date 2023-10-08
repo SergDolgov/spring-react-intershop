@@ -1,4 +1,4 @@
-package com.company.intershop.model;
+package com.company.intershop.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;

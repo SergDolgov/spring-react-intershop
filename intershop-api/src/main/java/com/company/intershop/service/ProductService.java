@@ -1,6 +1,6 @@
 package com.company.intershop.service;
 
-import com.company.intershop.model.Product;
+import com.company.intershop.domain.Product;
 
 import java.util.List;
 
