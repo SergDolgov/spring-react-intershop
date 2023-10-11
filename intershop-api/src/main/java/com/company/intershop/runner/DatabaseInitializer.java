@@ -31,6 +31,9 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+
+        if (1==1) return;
+
         if (!brandService.getBrands().isEmpty()) {
             return;
         }

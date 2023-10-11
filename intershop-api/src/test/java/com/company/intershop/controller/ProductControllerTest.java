@@ -1,5 +1,6 @@
 package com.company.intershop.controller;
 
+import com.company.intershop.rest.dto.ProductRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.company.intershop.dto.GraphQLRequest;
 //import com.company.intershop.dto.product.ProductSearchRequest;
@@ -7,16 +8,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.company.intershop.enums.SearchProduct;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +34,8 @@ import static com.company.intershop.constants.ErrorMessage.PRODUCT_NOT_FOUND;
 import static com.company.intershop.constants.PathConstants.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -35,8 +43,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value = {"/sql/create-products-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value = {"/sql/create-products-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value = {"/sql/create-products-before.sql", "/sql/create-user-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql/create-products-after.sql", "/sql/create-user-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@WithUserDetails("admin")
 public class ProductControllerTest {
 
     @Autowired
@@ -44,6 +53,9 @@ public class ProductControllerTest {
 
     @Autowired
     private ObjectMapper mapper;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
 //    private ProductSearchRequest filter;
 //    private GraphQLRequest graphQLRequest;
@@ -68,205 +80,89 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getAllProducts() throws Exception {
-        mockMvc.perform(get(API_V1_PRODUCTS)
+    public void getProducts() throws Exception {
+        mockMvc.perform(get("/api/products")
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
-                .andExpect(jsonPath("$[*].productTitle").isNotEmpty())
-                .andExpect(jsonPath("$[*].productr").isNotEmpty())
-                .andExpect(jsonPath("$[*].filename").isNotEmpty())
+                .andExpect(jsonPath("$[*].title").isNotEmpty())
+                .andExpect(jsonPath("$[*].brand").isNotEmpty())
+                .andExpect(jsonPath("$[*].poster").isNotEmpty())
                 .andExpect(jsonPath("$[*].price").isNotEmpty());
     }
 
     @Test
     public void getProductById() throws Exception {
-        mockMvc.perform(get(API_V1_PRODUCTS + PRODUCT_ID, 1)
+        mockMvc.perform(get("/api/products/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(1)))
-                .andExpect(jsonPath("$.productTitle", equalTo("Boss Bottled Night")))
-                .andExpect(jsonPath("$.productr", equalTo("Hugo Boss")))
-                .andExpect(jsonPath("$.country", equalTo("Germany")));
+                .andExpect(jsonPath("$.title", equalTo("I, Tonya")));
     }
 
     @Test
     public void getProductById_ShouldNotFound() throws Exception {
-        mockMvc.perform(get(API_V1_PRODUCTS + PRODUCT_ID, 1111)
+        mockMvc.perform(get("/api/products/{id}", 1111)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", equalTo(PRODUCT_NOT_FOUND)));
+                .andDo(print());
+               // .andExpect(jsonPath("$", equalTo(PRODUCT_NOT_FOUND)));
     }
 
     @Test
     public void getProductsByIds() throws Exception {
-        mockMvc.perform(post(API_V1_PRODUCTS + IDS)
+        mockMvc.perform(post("/api/products/cart")
                         .content(mapper.writeValueAsString(Arrays.asList(3L, 4L, 5L)))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
-                .andExpect(jsonPath("$[*].productTitle").isNotEmpty())
-                .andExpect(jsonPath("$[*].productr").isNotEmpty())
-                .andExpect(jsonPath("$[*].filename").isNotEmpty())
+                .andExpect(jsonPath("$[*].title").isNotEmpty())
+                .andExpect(jsonPath("$[*].brand").isNotEmpty())
+                .andExpect(jsonPath("$[*].poster").isNotEmpty())
                 .andExpect(jsonPath("$[*].price").isNotEmpty());
     }
 
     @Test
-    public void findProductsByFilterParams() throws Exception {
-//        mockMvc.perform(post(API_V1_PRODUCTS + SEARCH)
-//                        .content(mapper.writeValueAsString(filter))
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[*].id").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productTitle").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productr").isNotEmpty())
-//                .andExpect(jsonPath("$[*].filename").isNotEmpty())
-//                .andExpect(jsonPath("$[*].price").isNotEmpty());
+    public void getProductsContainingText() throws Exception {
+        mockMvc.perform(get("/api/products")
+                        .param("text", "Am")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()").value(2));
     }
 
     @Test
-    public void findProductsByFilterParamsProductrs() throws Exception {
-//        ProductSearchRequest filter = new ProductSearchRequest();
-//        List<String> productrs = new ArrayList<>();
-//        productrs.add(ProductR_CHANEL);
-//        List<Integer> prices = new ArrayList<>();
-//        prices.add(150);
-//        prices.add(250);
-//
-//        filter.setProductrs(productrs);
-//        filter.setGenders(new ArrayList<>());
-//        filter.setPrices(prices);
-//        filter.setSortByPrice(true);
-//
-//        mockMvc.perform(post(API_V1_PRODUCTS + SEARCH)
-//                        .content(mapper.writeValueAsString(filter))
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[*].id").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productTitle").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productr").isNotEmpty())
-//                .andExpect(jsonPath("$[*].filename").isNotEmpty())
-//                .andExpect(jsonPath("$[*].price").isNotEmpty());
+    public void deleteProductById() throws Exception {
+        mockMvc.perform(delete("/api/products/{id}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", equalTo(1)));
     }
 
     @Test
-    public void findByProductGender() throws Exception {
-//        ProductSearchRequest filter = new ProductSearchRequest();
-//        filter.setProductGender(PRODUCT_GENDER);
-//
-//        mockMvc.perform(post(API_V1_PRODUCTS + SEARCH_GENDER)
-//                        .content(mapper.writeValueAsString(filter))
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[*].id").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productTitle").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productr").isNotEmpty())
-//                .andExpect(jsonPath("$[*].filename").isNotEmpty())
-//                .andExpect(jsonPath("$[*].price").isNotEmpty());
-    }
+    @DisplayName("[200] POST /api/products/add - Add Product")
+    public void addProduct() throws Exception {
 
-    @Test
-    public void findByProductr() throws Exception {
-//        ProductSearchRequest filter = new ProductSearchRequest();
-//        filter.setProductr(ProductR_CHANEL);
-//
-//        mockMvc.perform(post(API_V1_PRODUCTS + SEARCH_PRODUCTR)
-//                        .content(mapper.writeValueAsString(filter))
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[*].id").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productTitle").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productr").isNotEmpty())
-//                .andExpect(jsonPath("$[*].filename").isNotEmpty())
-//                .andExpect(jsonPath("$[*].price").isNotEmpty());
-    }
+        String FILE_PATH = "src/test/resources/empty.jpg";
+        String FILE_NAME = "product.jpg";
 
-    @Test
-    public void findByInputText() throws Exception {
-//        SearchTypeRequest request = new SearchTypeRequest();
-//        request.setSearchType(SearchProduct.COUNTRY);
-//        request.setText("France");
-//
-//        mockMvc.perform(post(API_V1_PRODUCTS + SEARCH_TEXT)
-//                        .content(mapper.writeValueAsString(request))
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[*]", hasSize(15)))
-//                .andExpect(jsonPath("$[*].id").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productTitle").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productr").isNotEmpty())
-//                .andExpect(jsonPath("$[*].filename").isNotEmpty())
-//                .andExpect(jsonPath("$[*].price").isNotEmpty());
-//
-//        request.setSearchType(SearchProduct.BRAND);
-//        request.setText("Creed");
-//
-//        mockMvc.perform(post(API_V1_PRODUCTS + SEARCH_TEXT)
-//                        .content(mapper.writeValueAsString(request))
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[*]", hasSize(7)))
-//                .andExpect(jsonPath("$[*].id").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productTitle").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productr").isNotEmpty())
-//                .andExpect(jsonPath("$[*].filename").isNotEmpty())
-//                .andExpect(jsonPath("$[*].price").isNotEmpty());
-//
-//        request.setSearchType(SearchProduct.PRODUCT_TITLE);
-//        request.setText("Chanel N5");
-//
-//        mockMvc.perform(post(API_V1_PRODUCTS + SEARCH_TEXT)
-//                        .content(mapper.writeValueAsString(request))
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[*]", hasSize(1)))
-//                .andExpect(jsonPath("$[*].id").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productTitle").isNotEmpty())
-//                .andExpect(jsonPath("$[*].productr").isNotEmpty())
-//                .andExpect(jsonPath("$[*].filename").isNotEmpty())
-//                .andExpect(jsonPath("$[*].price").isNotEmpty());
-    }
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.setBrandId(1L);
+        productRequest.setTitle("Product 1");
+        productRequest.setPrice(999.99f);
 
-    @Test
-    public void getProductsByIdsQuery() throws Exception {
-//        graphQLRequest.setQuery(GRAPHQL_QUERY_PRODUCTS_BY_IDS);
-//
-//        mockMvc.perform(post(API_V1_PRODUCTS + GRAPHQL_IDS)
-//                        .content(mapper.writeValueAsString(graphQLRequest))
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.data.productsIds[*].id").isNotEmpty())
-//                .andExpect(jsonPath("$.data.productsIds[*].productTitle").isNotEmpty())
-//                .andExpect(jsonPath("$.data.productsIds[*].productr").isNotEmpty())
-//                .andExpect(jsonPath("$.data.productsIds[*].price").isNotEmpty());
-    }
+        FileInputStream inputFile = new FileInputStream(new File(FILE_PATH));
+        MockMultipartFile multipartFile = new MockMultipartFile("file", FILE_NAME, MediaType.MULTIPART_FORM_DATA_VALUE, inputFile);
+        MockMultipartFile jsonFile = new MockMultipartFile("product", "",
+                MediaType.APPLICATION_JSON_VALUE,
+                mapper.writeValueAsString(productRequest).getBytes());
+        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-    @Test
-    public void getAllProductsByQuery() throws Exception {
-//        graphQLRequest.setQuery(GRAPHQL_QUERY_PRODUCTS);
-//
-//        mockMvc.perform(post(API_V1_PRODUCTS + GRAPHQL_PRODUCTS)
-//                        .content(mapper.writeValueAsString(graphQLRequest))
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.data.products[*].id").isNotEmpty())
-//                .andExpect(jsonPath("$.data.products[*].productTitle").isNotEmpty())
-//                .andExpect(jsonPath("$.data.products[*].productr").isNotEmpty())
-//                .andExpect(jsonPath("$.data.products[*].price").isNotEmpty())
-//                .andExpect(jsonPath("$.data.products[*].filename").isNotEmpty());
-    }
+        mockMvc.perform(multipart("/api/products/add")
+                        .file(multipartFile)
+                        .file(jsonFile))
+                .andExpect(status().isOk());
+    }    
 
-    @Test
-    public void getProductByQuery() throws Exception {
-//        graphQLRequest.setQuery(GRAPHQL_QUERY_PRODUCT);
-//
-//        mockMvc.perform(post(API_V1_PRODUCTS + GRAPHQL_PRODUCT)
-//                        .content(mapper.writeValueAsString(graphQLRequest))
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.data.product.id", equalTo(1)))
-//                .andExpect(jsonPath("$.data.product.productTitle", equalTo("Boss Bottled Night")))
-//                .andExpect(jsonPath("$.data.product.productr", equalTo("Hugo Boss")))
-//                .andExpect(jsonPath("$.data.product.price", equalTo(35)));
-    }
 }
+

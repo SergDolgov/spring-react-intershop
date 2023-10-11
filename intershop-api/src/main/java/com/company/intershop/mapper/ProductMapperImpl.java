@@ -1,7 +1,7 @@
 package com.company.intershop.mapper;
 
 import com.company.intershop.domain.Product;
-import com.company.intershop.rest.dto.CreateProductRequest;
+import com.company.intershop.rest.dto.ProductRequest;
 import com.company.intershop.rest.dto.ProductDto;
 import com.company.intershop.service.BrandService;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +16,15 @@ public class ProductMapperImpl implements ProductMapper {
     private final BrandService brandService;
 
     @Override
-    public Product toProduct(CreateProductRequest createProductRequest) {
-        if (createProductRequest == null) {
+    public Product toProduct(ProductRequest productRequest) {
+        if (productRequest == null) {
             return null;
         }
         return new Product(
-                brandService.findById(createProductRequest.getBrandId()),
-                createProductRequest.getTitle(),
-                createProductRequest.getPoster(),
-                createProductRequest.getPrice()
+                brandService.findById(productRequest.getBrandId()),
+                productRequest.getTitle(),
+                productRequest.getPoster(),
+                productRequest.getPrice()
                 );
     }
 

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class CreateProductRequest {
+public class ProductRequest {
 
     @Schema(example = "1")
     private Long brandId;

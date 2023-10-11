@@ -2,7 +2,7 @@ package com.company.intershop.rest;
 
 import com.company.intershop.mapper.ProductMapper;
 import com.company.intershop.domain.Product;
-import com.company.intershop.rest.dto.CreateProductRequest;
+import com.company.intershop.rest.dto.ProductRequest;
 import com.company.intershop.rest.dto.ProductDto;
 import com.company.intershop.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,9 +51,9 @@ public class ProductController {
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public ProductDto createProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
-        Product product = productMapper.toProduct(createProductRequest);
+    @PostMapping("/add")
+    public ProductDto createProduct(@Valid @RequestBody ProductRequest productRequest) {
+        Product product = productMapper.toProduct(productRequest);
         return productMapper.toProductDto(productService.saveProduct(product));
     }
 

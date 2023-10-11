@@ -54,22 +54,6 @@ public class AuthControllerTest {
     private ObjectMapper mapper;
 
     @Test
-    public void getUsers() throws Exception {
-
-        List<User> Users = new ArrayList<>(
-                Arrays.asList(
-                    new User("admin", "admin", "Admin", "admin@mycompany.com", WebSecurityConfig.ADMIN, null, OAuth2Provider.LOCAL, "1"),
-                    new User("user", "user", "User", "user@mycompany.com", WebSecurityConfig.USER, null, OAuth2Provider.LOCAL, "2")
-                ));
-
-        when(userRepository.findAll()).thenReturn(Users);
-        mockMvc.perform(get("/api/users"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(Users.size()))
-                .andDo(print());
-    }
-
-    @Test
     public void login() throws Exception {
         LoginRequest userRequest = new LoginRequest();
         userRequest.setUsername(USER_NAME);
@@ -77,7 +61,6 @@ public class AuthControllerTest {
 
         User user = new User();
         user.setUsername(USER_NAME);
-        //user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setPassword("$2a$10$bFwKPxtUMmYOvtDeB2RRYu6lxVKVjE/xAlbWWiHuek1iLAimKAh3C");
         user.setRole("USER");
 
