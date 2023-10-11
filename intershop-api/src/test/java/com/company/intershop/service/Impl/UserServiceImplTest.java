@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class UserServiceImlTest {
+public class UserServiceImplTest {
 
     @Autowired
     private UserServiceImpl userService;

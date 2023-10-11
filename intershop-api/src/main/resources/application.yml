@@ -28,14 +28,15 @@ app:
     # Signing key for HS512 algorithm
     # In https://it-tools.tech/token-generator you can generate all kinds of keys
     secret: v9y$B&E)H@MbQeThWmZq4t7w!z%C*F-JaNdRfUjXn2r5u8x/A?D(G+KbPeShVkYp
+    #secret: djaveu
     expiration:
       minutes: 10
   oauth2:
     #redirectUri: http://localhost:3000/oauth2/redirect
     redirectUri: http://localhost:9000/oauth2/redirect
   cors:
-    allowed-origins: http://localhost:3000
-    #allowed-origins: http://localhost:9000
+    #allowed-origins: http://localhost:3000
+    allowed-origins: http://localhost:9000
 
 logging:
   level:

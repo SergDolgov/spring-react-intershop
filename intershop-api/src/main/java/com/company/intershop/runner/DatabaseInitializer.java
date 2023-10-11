@@ -38,11 +38,13 @@ public class DatabaseInitializer implements CommandLineRunner {
         if (!userService.getUsers().isEmpty()) {
             return;
         }
+
+        BRANDS.forEach(brandService::saveBrand);
+
         USERS.forEach(user -> {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.saveUser(user);
         });
-        BRANDS.forEach(brandService::saveBrand);
 
         LG = brandService.getBrandByName("LG");
         Nokia = brandService.getBrandByName("Nokia");
