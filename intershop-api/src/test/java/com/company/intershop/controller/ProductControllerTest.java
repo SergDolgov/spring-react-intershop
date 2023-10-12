@@ -140,28 +140,34 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("[200] POST /api/products/add - Add Product")
+    @DisplayName("[201] POST /api/products/add - Add Product")
     public void addProduct() throws Exception {
-
-        String FILE_PATH = "src/test/resources/empty.jpg";
-        String FILE_NAME = "product.jpg";
 
         ProductRequest productRequest = new ProductRequest();
         productRequest.setBrandId(1L);
         productRequest.setTitle("Product 1");
         productRequest.setPrice(999.99f);
+        productRequest.setPoster("src/test/resources/empty.jpg");
 
-        FileInputStream inputFile = new FileInputStream(new File(FILE_PATH));
-        MockMultipartFile multipartFile = new MockMultipartFile("file", FILE_NAME, MediaType.MULTIPART_FORM_DATA_VALUE, inputFile);
-        MockMultipartFile jsonFile = new MockMultipartFile("product", "",
-                MediaType.APPLICATION_JSON_VALUE,
-                mapper.writeValueAsString(productRequest).getBytes());
-        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-
-        mockMvc.perform(multipart("/api/products/add")
-                        .file(multipartFile)
-                        .file(jsonFile))
-                .andExpect(status().isOk());
+        mockMvc.perform(post("/api/products/add")
+                    .content(mapper.writeValueAsString(productRequest).getBytes())
+                    .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.title", equalTo("Product 1")));
+//        String FILE_PATH = "src/test/resources/empty.jpg";
+//        String FILE_NAME = "product.jpg";
+//
+//        FileInputStream inputFile = new FileInputStream(new File(FILE_PATH));
+//        MockMultipartFile multipartFile = new MockMultipartFile("file", FILE_NAME, MediaType.MULTIPART_FORM_DATA_VALUE, inputFile);
+//        MockMultipartFile jsonFile = new MockMultipartFile("product", "",
+//                MediaType.APPLICATION_JSON_VALUE,
+//                mapper.writeValueAsString(productRequest).getBytes());
+//        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+//
+//        mockMvc.perform(multipart("/api/products/add")
+//                        .file(multipartFile)
+//                        .file(jsonFile))
+//                .andExpect(status().isOk());
     }    
 
 }
